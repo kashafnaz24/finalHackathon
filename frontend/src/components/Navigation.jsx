@@ -2,16 +2,12 @@ import React, { useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faBars,
-  faSearch,
-  faGift,
   faShoppingBag,
-  faChevronDown,
   faTimes,
   faHome,
 } from "@fortawesome/free-solid-svg-icons";
-import { faHeart } from "@fortawesome/free-regular-svg-icons";
 import { Link } from "react-router-dom"; // Import Link for routing
-import logo from "../assets/images/logo (4).png";
+import logo from "../assets/images/user-management-icon.jpg";
 import { useSelector } from "react-redux";
 
 const Navigation = () => {
@@ -29,17 +25,13 @@ const Navigation = () => {
         <div className="flex items-center justify-between h-16">
           <div className="flex-shrink-0">
             <Link to="/">
-              <img className="h-8 w-auto md:h-30" src={logo} alt="logo" />
+            <img className="h-4 w-auto md:h-10" src={logo} alt="logo" />
             </Link>
           </div>
 
-          <div className="hidden sm:flex space-x-6 ">
+          <div className="hidden sm:flex space-x-6">
             <NavLink to="/" icon={faHome} text="Home" />
             {isAuthenticated && <NavLink to="/profile" text="Profile" />}
-            <NavLink to="/products" text="Products" />
-            <NavLink to="/about" text="About" />
-            <NavLink to="/contact" text="Contact" />
-
             {isAuthenticated ? (
               <NavLink to="/logout" text="Logout" />
             ) : (
@@ -76,19 +68,18 @@ const Navigation = () => {
         </div>
       </div>
 
-      <div
-        className={`${
-          isOpen ? "block" : "hidden"
-        } sm:hidden bg-white shadow-md`}
-      >
+      <div className={`${isOpen ? "block" : "hidden"} sm:hidden bg-white shadow-md`}>
         <div className="px-4 pt-2 pb-3 space-y-2">
           <NavLinkMobile to="/" text="Home" onClick={toggleMenu} />
-          <NavLinkMobile to="/products" text="Products" onClick={toggleMenu} />
           {isAuthenticated && <NavLinkMobile to="/profile" text="Profile" onClick={toggleMenu} />}
-          <NavLinkMobile to="/about" text="About" onClick={toggleMenu} />
-          <NavLinkMobile to="/contact" text="Contact" onClick={toggleMenu} />
-          <NavLinkMobile to="/signup" text="Sign Up" />
-          <NavLinkMobile to="/login" text="Login" />
+          {isAuthenticated ? (
+            <NavLinkMobile to="/logout" text="Logout" onClick={toggleMenu} />
+          ) : (
+            <>
+              <NavLinkMobile to="/signup" text="Sign Up" onClick={toggleMenu} />
+              <NavLinkMobile to="/login" text="Login" onClick={toggleMenu} />
+            </>
+          )}
         </div>
       </div>
     </nav>
@@ -117,8 +108,9 @@ const NavLinkMobile = ({ to, text, onClick }) => (
     className="block py-2 px-3 text-gray-700 hover:text-[#BD1521] transition duration-300 relative group"
   >
     <span>{text}</span>
-    <span className="absolute bottom-0 left-0 w-full  h-0.5 transform scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left"></span>
+    <span className="absolute bottom-0 left-0 w-full h-0.5 transform scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left"></span>
   </Link>
 );
 
 export default Navigation;
+

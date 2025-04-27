@@ -9,6 +9,6 @@ router.put("/user/:id", updateUser);
 router.delete("/user/:id", deleteUser);
 router.post("/user/login", login);
 router.get("/user/me", tokenVerification, getLoggedInUser); // Fetch logged-in user's details
-router.get('/isAdmin', tokenVerification, isAdmin);
+
 
 export default router;

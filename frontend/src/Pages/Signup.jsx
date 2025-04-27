@@ -19,7 +19,6 @@ const validationSchema = Yup.object({
     .matches(/^[^\s@]+@[^\s@]+\.(com|net)$/, "Only .com and .net domains are allowed")
     .required("Email is required"),
 
-
   password: Yup.string()
     .min(3, "Password must be at least 3 characters long")
     .max(30, "Password must not exceed 30 characters")
@@ -56,7 +55,7 @@ const Signup = () => {
               const data = await response.json();
               setLoading(false);
               console.log("Response:", response, "data", data);
-              if (response.ok) {  
+              if (response.ok) {
                 toast.success(data.message);
                 navigate('/');
               } else {
@@ -69,16 +68,16 @@ const Signup = () => {
             }
           }}
         >
-          <Form className="space-y-4">
+          <Form className="space-y-6">
             <div>
               <label className="block text-sm font-medium text-gray-700">Your Name</label>
               <Field
                 name="name"
                 type="text"
-                className="w-full mt-1 p-2 border rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                className="w-full mt-2 p-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500 shadow-sm transition-all"
                 placeholder="Enter your name"
               />
-              <ErrorMessage name="name" component="p" className="text-red-500 text-sm" />
+              <ErrorMessage name="name" component="p" className="text-red-500 text-xs mt-1" />
             </div>
 
             <div>
@@ -86,35 +85,35 @@ const Signup = () => {
               <Field
                 name="email"
                 type="email"
-                className="w-full mt-1 p-2 border rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                className="w-full mt-2 p-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500 shadow-sm transition-all"
                 placeholder="Enter your email"
               />
-              <ErrorMessage name="email" component="p" className="text-red-500 text-sm" />
+              <ErrorMessage name="email" component="p" className="text-red-500 text-xs mt-1" />
             </div>
 
             <div>
               <label className="block text-sm font-medium text-gray-700">Password</label>
-              <div className='relative'>
+              <div className="relative">
                 <Field
                   name="password"
                   type={showPassword ? "text" : "password"}
-                  className="w-full mt-1 p-2 border rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                  className="w-full mt-2 p-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500 shadow-sm transition-all"
                   placeholder="Enter your password"
                 />
                 <button
                   type="button"
-                  className='absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-600 focus:outline-none'
+                  className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-600 focus:outline-none"
                   onClick={() => { setShowPassword(!showPassword) }}
                 >
                   {showPassword ? <FaEyeSlash /> : <FaEye />}
                 </button>
-                <ErrorMessage name="password" component="p" className="text-red-500 text-sm" />
+                <ErrorMessage name="password" component="p" className="text-red-500 text-xs mt-1" />
               </div>
             </div>
 
             <button
               type="submit"
-              className="w-full bg-gray-800 hover:bg-gray-900 text-white font-medium py-2 rounded-md transition-all duration-300 disabled:bg-gray-500"
+              className="w-full bg-blue-600 hover:bg-blue-700 text-white font-medium py-3 rounded-md transition-all duration-300 disabled:bg-blue-300"
               disabled={loading}
             >
               {loading ? "Signing Up..." : "Sign Up"}
