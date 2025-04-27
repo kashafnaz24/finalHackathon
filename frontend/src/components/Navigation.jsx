@@ -6,13 +6,14 @@ import {
   faTimes,
   faHome,
 } from "@fortawesome/free-solid-svg-icons";
-import { Link } from "react-router-dom"; // Import Link for routing
+import { Link } from "react-router-dom"; 
 import logo from "../assets/images/user-management-icon.jpg";
 import { useSelector } from "react-redux";
 
 const Navigation = () => {
   const [isOpen, setIsOpen] = useState(false);
 
+  
   const { isAuthenticated } = useSelector((state) => state.auth);
 
   const toggleMenu = () => {
@@ -25,12 +26,13 @@ const Navigation = () => {
         <div className="flex items-center justify-between h-16">
           <div className="flex-shrink-0">
             <Link to="/">
-            <img className="h-4 w-auto md:h-10" src={logo} alt="logo" />
+              <img className="h-4 w-auto md:h-10" src={logo} alt="logo" />
             </Link>
           </div>
 
           <div className="hidden sm:flex space-x-6">
             <NavLink to="/" icon={faHome} text="Home" />
+            {isAuthenticated && <NavLink to="/dashboard" text="Dashboard" />}
             {isAuthenticated && <NavLink to="/profile" text="Profile" />}
             {isAuthenticated ? (
               <NavLink to="/logout" text="Logout" />
@@ -68,9 +70,11 @@ const Navigation = () => {
         </div>
       </div>
 
+      {/* Mobile Menu */}
       <div className={`${isOpen ? "block" : "hidden"} sm:hidden bg-white shadow-md`}>
         <div className="px-4 pt-2 pb-3 space-y-2">
           <NavLinkMobile to="/" text="Home" onClick={toggleMenu} />
+          {isAuthenticated && <NavLinkMobile to="/dashboard" text="Dashboard" onClick={toggleMenu} />}
           {isAuthenticated && <NavLinkMobile to="/profile" text="Profile" onClick={toggleMenu} />}
           {isAuthenticated ? (
             <NavLinkMobile to="/logout" text="Logout" onClick={toggleMenu} />
@@ -86,6 +90,7 @@ const Navigation = () => {
   );
 };
 
+// Regular NavLink (for desktop)
 const NavLink = ({ to, icon, text }) => (
   <Link
     to={to}
@@ -101,6 +106,7 @@ const NavLink = ({ to, icon, text }) => (
   </Link>
 );
 
+// Mobile NavLink
 const NavLinkMobile = ({ to, text, onClick }) => (
   <Link
     to={to}
@@ -113,4 +119,3 @@ const NavLinkMobile = ({ to, text, onClick }) => (
 );
 
 export default Navigation;
-
