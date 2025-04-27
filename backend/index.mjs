@@ -12,9 +12,8 @@ const app = express();
 app.use(
 	cors({
 		origin: ['http://localhost:5174',
-			 'http://localhost:5173',
-			 'https://final-hackathon-rosy.vercel.app/'
-			
+			  'http://localhost:5173',
+			  'https://final-hackathon-rosy.vercel.app/'
 			],
 		methods: ['GET', 'PUT', 'POST', 'DELETE'],
 		credentials: true,
