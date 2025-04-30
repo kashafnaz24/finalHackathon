@@ -19,10 +19,6 @@ backend/.env
 backend/.env.local
 backend/.env.*.local
 
-# Build output
-frontend/dist/
-backend/dist/
-
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json
