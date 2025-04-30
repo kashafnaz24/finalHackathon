@@ -10,25 +10,31 @@ const login = async (req, res) => {
     const { email, password } = req.body;
     const user = await User.findOne({ email });
 
-    if (user) {
-      const checkPassword = bcrypt.compareSync(password, user.password);
-      if (checkPassword) {
-        var token = JWT.sign({ userId: user._id }, process.env.JWT_SECRET);
-
-        res
-          .status(200)
-          .json({ status: 200, message: "Login Successfull", user, token });
-      } else {
-        res.status(401).json({ status: 401, message: "Incorrect Password" });
-      }
-    } else {
-      res.status(404).json({ status: 404, message: "User not found" });
+    if (!user) {
+      return res.status(404).json({ status: 404, message: "User not found" });
     }
+
+    const isMatch = await bcrypt.compare(password, user.password);
+    if (!isMatch) {
+      return res.status(401).json({ status: 401, message: "Incorrect password" });
+    }
+
+    const token = JWT.sign({ userId: user._id }, process.env.JWT_SECRET);
+
+    const { password: _, ...safeUser } = user._doc;
+
+    res.status(200).json({
+      status: 200,
+      message: "Login Successful",
+      user: safeUser,
+      token,
+    });
   } catch (err) {
-    console.log(err);
-    res.status(400).json({ error: err, status: 400 });
+    console.error("Login error:", err.message);
+    res.status(500).json({ status: 500, message: "Server error" });
   }
 };
+
 const createUser = async (req, res) => {
   console.log(chalk.bgCyan("incoming call to signup api"));
   if (!req.body) {
